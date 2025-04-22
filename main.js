@@ -23,3 +23,5 @@ filterSelect.addEventListener("change", () => {
   setCurrentFilter(filterSelect.value);
   renderList();
 });
+
+renderList();
