@@ -4,8 +4,17 @@ function saveToLocalStorage() {
   localStorage.setItem("todoArray", JSON.stringify(todoArray));
 }
 
-export function addTodo(task) {
-  todoArray.push({ text: task, completed: false });
+export function addTodo(task, deadline = null) {
+  const newTodo = {
+    text: task,
+    completed: false,
+  };
+
+  if (deadline) {
+    newTodo.deadline = deadline;
+  }
+
+  todoArray.push(newTodo);
   saveToLocalStorage();
 }
 

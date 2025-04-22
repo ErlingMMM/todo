@@ -4,12 +4,16 @@ import { renderList, setCurrentFilter } from "./renderList.js";
 const input = document.getElementById("todo-input");
 const addBtn = document.getElementById("add-btn");
 const filterSelect = document.getElementById("filter-select");
+const dateInput = document.getElementById("todo-deadline");
 
 function addTask() {
   const newTask = input.value.trim();
+  const deadline = dateInput.value;
+
   if (newTask !== "") {
-    addTodo(newTask);
+    addTodo(newTask, deadline || null);
     input.value = "";
+    dateInput.value = "";
     renderList();
   }
 }

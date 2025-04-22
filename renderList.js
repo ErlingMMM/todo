@@ -61,6 +61,17 @@ export function renderList() {
         transition duration-200
       `;
 
+      textWrapper.appendChild(span);
+
+      if (todo.deadline) {
+        const deadlineElement = document.createElement("div");
+        deadlineElement.className = "text-xs text-gray-600 mt-1";
+        deadlineElement.textContent = `Deadline: ${new Date(
+          todo.deadline
+        ).toLocaleString()}`;
+        textWrapper.appendChild(deadlineElement);
+      }
+
       deleteBtn.addEventListener("click", () => {
         removeTodo(index);
         renderList();
