@@ -12,15 +12,21 @@
     <div class="w-full max-w-md bg-white rounded shadow-md p-6">
         <h1 class="text-2xl font-bold mb-4">My Todo's</h1>
 
+        <div class="mb-4">
+            <label for="todo-deadline" class="block text-sm font-medium text-gray-700 mb-1">Deadline</label>
+            <input type="datetime-local" id="todo-deadline" name="todo-deadline"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
         <div class="flex space-x-2 mb-4">
-            <input id="todo-input" type="text" placeholder="Add a todo task"
+            <input id="todo-input" type="text" placeholder="Add a todo"
                 class="flex-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
             <button id="add-btn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Add
             </button>
         </div>
 
-
+        <h3>Filter</h3>
         <div class="mb-4">
             <select id="filter-select"
                 class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
