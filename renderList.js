@@ -1,5 +1,9 @@
 import { todoArray, removeTodo } from "./todoData.js";
 
+function isDarkMode() {
+  return document.body.classList.contains("bg-black");
+}
+
 const todoList = document.getElementById("todo-list");
 
 let currentFilter = "all";
@@ -19,7 +23,10 @@ export function renderList() {
     })
     .forEach((todo, index) => {
       const li = document.createElement("li");
-      li.className = "bg-gray-200 px-3 py-2 rounded";
+      li.className = `
+  ${isDarkMode() ? "bg-gray-800 text-white" : "bg-gray-200 text-black"} 
+  px-3 py-2 rounded
+`;
 
       const topRow = document.createElement("div");
       topRow.className = "flex justify-between items-center";
@@ -65,7 +72,10 @@ export function renderList() {
 
       if (todo.deadline) {
         const deadlineElement = document.createElement("div");
-        deadlineElement.className = "text-xs text-gray-600 mt-1";
+        deadlineElement.className = `text-xs mt-1 ${
+          isDarkMode() ? "text-gray-400" : "text-gray-600"
+        }`;
+
         deadlineElement.textContent = `Deadline: ${new Date(
           todo.deadline
         ).toLocaleString()}`;
