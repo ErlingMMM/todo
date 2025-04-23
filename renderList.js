@@ -13,9 +13,7 @@ export function setCurrentFilter(filter) {
 }
 
 export function renderList() {
-  const renderedIndexes = Array.from(todoList.children).map((li) =>
-    parseInt(li.getAttribute("data-index"))
-  );
+  todoList.innerHTML = "";
 
   const filteredTodos = todoArray
     .map((todo, i) => ({ ...todo, index: i }))
@@ -26,8 +24,6 @@ export function renderList() {
     });
 
   filteredTodos.forEach(({ text, completed, deadline, index }) => {
-    if (renderedIndexes.includes(index)) return;
-
     const li = document.createElement("li");
     li.setAttribute("data-index", index);
     li.className = `
@@ -51,6 +47,17 @@ export function renderList() {
     }
     textWrapper.appendChild(span);
 
+    if (deadline) {
+      const deadlineElement = document.createElement("div");
+      deadlineElement.className = `text-xs mt-1 ${
+        isDarkMode() ? "text-gray-400" : "text-gray-600"
+      }`;
+      deadlineElement.textContent = `Deadline: ${new Date(
+        deadline
+      ).toLocaleString()}`;
+      textWrapper.appendChild(deadlineElement);
+    }
+
     const buttonGroup = document.createElement("div");
     buttonGroup.className = "flex space-x-2";
 
@@ -64,10 +71,8 @@ export function renderList() {
           : "bg-green-500 text-white hover:bg-green-600"
       }
     `;
-
     completeBtn.addEventListener("click", () => {
       todoArray[index].completed = !todoArray[index].completed;
-      clearList();
       renderList();
     });
 
@@ -78,30 +83,16 @@ export function renderList() {
       hover:bg-red-100 
       rounded-full 
       p-2 
-      transition duration-200
+      transition duration-400
     `;
-
     deleteBtn.addEventListener("click", () => {
       li.classList.add("opacity-0", "translate-x-4");
       li.classList.remove("opacity-100", "translate-x-0");
       setTimeout(() => {
         removeTodo(index);
-        li.remove();
-        clearList();
         renderList();
-      }, 300);
+      }, 500);
     });
-
-    if (deadline) {
-      const deadlineElement = document.createElement("div");
-      deadlineElement.className = `text-xs mt-1 ${
-        isDarkMode() ? "text-gray-400" : "text-gray-600"
-      }`;
-      deadlineElement.textContent = `Deadline: ${new Date(
-        deadline
-      ).toLocaleString()}`;
-      textWrapper.appendChild(deadlineElement);
-    }
 
     buttonGroup.appendChild(completeBtn);
     buttonGroup.appendChild(deleteBtn);
@@ -112,8 +103,4 @@ export function renderList() {
     li.appendChild(topRow);
     todoList.appendChild(li);
   });
-}
-
-function clearList() {
-  todoList.innerHTML = "";
 }
